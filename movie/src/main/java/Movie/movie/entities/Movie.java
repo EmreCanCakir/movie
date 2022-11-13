@@ -3,8 +3,12 @@ package Movie.movie.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -12,6 +16,7 @@ import java.util.Date;
 @Table(name = "movies")
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)       //This provides to keep lastModifiedDate and creationTimeStamp values in [];
 public class Movie {
 
     @Id
@@ -45,4 +50,12 @@ public class Movie {
 
     @OneToOne(mappedBy = "movie")
     private MovieItem movieItemId;
+
+    @Column(name = "created_at",nullable = false,updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "last_modified_at")
+    private LocalDateTime lastModifiedAt;
 }
