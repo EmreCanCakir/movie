@@ -30,9 +30,6 @@ public class Movie {
     @Column(name = "subject", nullable = false)
     private String subject;
 
-    @Column(name = "description", nullable = false, length = 500)
-    private String description;
-
     @Column(name = "year", nullable = false)
     private Date year;
 
