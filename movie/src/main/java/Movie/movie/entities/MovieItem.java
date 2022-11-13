@@ -25,6 +25,9 @@ public class MovieItem {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "description", nullable = false, length = 1000)
+    private String description;
+
     @OneToOne
     @JoinColumn(name = "movie_id", referencedColumnName = "id", nullable = false)
     private Movie movie;
