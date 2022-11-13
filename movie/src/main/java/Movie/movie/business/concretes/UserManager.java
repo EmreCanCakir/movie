@@ -1,15 +1,17 @@
 package Movie.movie.business.concretes;
 
 import Movie.movie.business.abstracts.MovieService;
+import Movie.movie.business.abstracts.UserService;
 import Movie.movie.core.utilities.results.DataResult;
 import Movie.movie.core.utilities.results.Result;
 import Movie.movie.dataaccess.UserDao;
 import Movie.movie.entities.Movie;
+import Movie.movie.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserManager implements MovieService {
+public class UserManager implements UserService {
     private UserDao userDao;
 
     @Autowired
@@ -18,7 +20,7 @@ public class UserManager implements MovieService {
     }
 
     @Override
-    public Result add(Movie entity) {
+    public Result add(User entity) {
         return null;
     }
 
@@ -28,7 +30,7 @@ public class UserManager implements MovieService {
     }
 
     @Override
-    public Result update(Movie entity) {
+    public Result update(User entity) {
         return null;
     }
 
