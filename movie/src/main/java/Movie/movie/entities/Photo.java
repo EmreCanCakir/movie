@@ -36,4 +36,10 @@ public class Photo {
     @JoinColumn(name = "movie_item_id")
     @JsonManagedReference
     private MovieItem movieItemId;
+
+    @ManyToOne
+    @MapsId("id")
+    @JoinColumn(name = "user_movie_item_command_id")
+    @JsonManagedReference
+    private UserMovieItemComment userMovieItemCommentId;
 }
