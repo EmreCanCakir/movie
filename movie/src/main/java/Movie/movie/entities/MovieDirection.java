@@ -20,9 +20,9 @@ public class MovieDirection {
 
     @ManyToOne
     @MapsId("id")
-    @JoinColumn(name = "movie_item_id")
+    @JoinColumn(name = "movie_id")
     @JsonManagedReference
-    private MovieItem movieItemId;
+    private Movie movieId;
 
     @ManyToOne
     @MapsId("id")
