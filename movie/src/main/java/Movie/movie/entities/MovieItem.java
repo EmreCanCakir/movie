@@ -34,22 +34,6 @@ public class MovieItem {
 
     @OneToMany(mappedBy = "movieItemId")
     @JsonBackReference
-    private List<Photo> photos;
-
-    @OneToMany(mappedBy = "movieItemId")
-    @JsonBackReference
-    private List<MovieGenres> movieGenres;
-
-    @OneToMany(mappedBy = "movieItemId")
-    @JsonBackReference
-    private List<MovieDirection> movieDirections;
-
-    @OneToMany(mappedBy = "movieItemId")
-    @JsonBackReference
-    private List<MovieCast> movieCasts;
-
-    @OneToMany(mappedBy = "movieItemId")
-    @JsonBackReference
     private List<Link> links;
 
     @OneToMany(mappedBy = "movieItemId")

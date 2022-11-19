@@ -3,6 +3,7 @@ package Movie.movie.business.concretes;
 import Movie.movie.business.abstracts.DirectorService;
 import Movie.movie.core.utilities.results.DataResult;
 import Movie.movie.core.utilities.results.Result;
+import Movie.movie.core.utilities.results.SuccessDataResult;
 import Movie.movie.dataaccess.ActorDao;
 import Movie.movie.dataaccess.DirectorDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,6 @@ public class DirectorManager implements DirectorService {
 
     @Override
     public DataResult getAll() {
-        return null;
+        return new SuccessDataResult(this.directorDao.findAll(),"all directors get");
     }
 }

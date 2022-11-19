@@ -3,6 +3,7 @@ package Movie.movie.business.concretes;
 import Movie.movie.business.abstracts.MovieCastService;
 import Movie.movie.core.utilities.results.DataResult;
 import Movie.movie.core.utilities.results.Result;
+import Movie.movie.core.utilities.results.SuccessDataResult;
 import Movie.movie.dataaccess.MovieCastDao;
 import Movie.movie.entities.MovieCast;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,6 @@ public class MovieCastManager implements MovieCastService {
 
     @Override
     public DataResult getAll() {
-        return null;
+        return new SuccessDataResult(this.movieCastDao.findAll(),"all movie casts get");
     }
 }

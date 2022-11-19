@@ -1,6 +1,6 @@
 package Movie.movie.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,6 +37,6 @@ public class Actor {
     private char gender;
 
     @OneToMany(mappedBy = "actorId")
-    @JsonBackReference
+    @JsonIgnore
     private List<MovieCast> movieCasts;
 }

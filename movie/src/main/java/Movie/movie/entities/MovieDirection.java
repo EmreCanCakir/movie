@@ -1,4 +1,5 @@
 package Movie.movie.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,9 +21,9 @@ public class MovieDirection {
 
     @ManyToOne
     @MapsId("id")
-    @JoinColumn(name = "movie_item_id")
-    @JsonManagedReference
-    private MovieItem movieItemId;
+    @JoinColumn(name = "movie_id")
+    @JsonIgnore
+    private Movie movieId;
 
     @ManyToOne
     @MapsId("id")

@@ -1,6 +1,6 @@
 package Movie.movie.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,13 +33,13 @@ public class Photo {
 
     @ManyToOne
     @MapsId("id")
-    @JoinColumn(name = "movie_item_id")
-    @JsonManagedReference
-    private MovieItem movieItemId;
+    @JoinColumn(name = "movie_id")
+    @JsonIgnore
+    private Movie movieId;
 
     @ManyToOne
     @MapsId("id")
     @JoinColumn(name = "user_movie_item_command_id")
-    @JsonManagedReference
+    @JsonIgnore
     private UserMovieItemComment userMovieItemCommentId;
 }

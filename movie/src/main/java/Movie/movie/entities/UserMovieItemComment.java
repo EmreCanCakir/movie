@@ -1,6 +1,7 @@
 package Movie.movie.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,7 +39,7 @@ public class UserMovieItemComment {
     @ManyToOne
     @MapsId("id")
     @JoinColumn(name = "movie_item_id")
-    @JsonManagedReference
+    @JsonIgnore
     private MovieItem movieItemId;
 
     @Column(name = "created_at",nullable = false,updatable = false)

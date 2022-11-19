@@ -3,6 +3,7 @@ package Movie.movie.business.concretes;
 import Movie.movie.business.abstracts.UserMovieItemCommentService;
 import Movie.movie.core.utilities.results.DataResult;
 import Movie.movie.core.utilities.results.Result;
+import Movie.movie.core.utilities.results.SuccessDataResult;
 import Movie.movie.dataaccess.UserMovieItemCommentDao;
 import Movie.movie.entities.UserMovieItemComment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,6 @@ public class UserMovieItemCommentManager implements UserMovieItemCommentService 
 
     @Override
     public DataResult getAll() {
-        return null;
+        return new SuccessDataResult(this.userMovieItemCommentDao.findAll(),"all user movie item comments get");
     }
 }
