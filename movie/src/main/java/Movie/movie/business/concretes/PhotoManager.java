@@ -3,6 +3,7 @@ package Movie.movie.business.concretes;
 import Movie.movie.business.abstracts.PhotoService;
 import Movie.movie.core.utilities.results.DataResult;
 import Movie.movie.core.utilities.results.Result;
+import Movie.movie.core.utilities.results.SuccessDataResult;
 import Movie.movie.dataaccess.PhotoDao;
 import Movie.movie.entities.Photo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,6 @@ public class PhotoManager implements PhotoService {
 
     @Override
     public DataResult getAll() {
-        return null;
+        return new SuccessDataResult(this.photoDao.findAll(),"all photos get");
     }
 }

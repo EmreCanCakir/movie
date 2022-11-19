@@ -3,6 +3,7 @@ package Movie.movie.business.concretes;
 import Movie.movie.business.abstracts.MovieDirectionService;
 import Movie.movie.core.utilities.results.DataResult;
 import Movie.movie.core.utilities.results.Result;
+import Movie.movie.core.utilities.results.SuccessDataResult;
 import Movie.movie.dataaccess.MovieDirectionDao;
 import Movie.movie.entities.MovieDirection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,6 @@ public class MovieDirectionManager implements MovieDirectionService {
 
     @Override
     public DataResult getAll() {
-        return null;
+        return new SuccessDataResult(this.movieDirectionDao.findAll(),"all movie directions get");
     }
 }

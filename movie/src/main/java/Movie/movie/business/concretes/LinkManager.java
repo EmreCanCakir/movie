@@ -3,6 +3,7 @@ package Movie.movie.business.concretes;
 import Movie.movie.business.abstracts.LinkService;
 import Movie.movie.core.utilities.results.DataResult;
 import Movie.movie.core.utilities.results.Result;
+import Movie.movie.core.utilities.results.SuccessDataResult;
 import Movie.movie.dataaccess.LinkDao;
 import Movie.movie.entities.Link;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,6 @@ public class LinkManager implements LinkService {
 
     @Override
     public DataResult getAll() {
-        return null;
+        return new SuccessDataResult(this.linkDao.findAll(),"all links get");
     }
 }

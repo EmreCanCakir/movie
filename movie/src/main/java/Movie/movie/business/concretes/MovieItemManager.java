@@ -3,6 +3,7 @@ package Movie.movie.business.concretes;
 import Movie.movie.business.abstracts.MovieItemService;
 import Movie.movie.core.utilities.results.DataResult;
 import Movie.movie.core.utilities.results.Result;
+import Movie.movie.core.utilities.results.SuccessDataResult;
 import Movie.movie.dataaccess.MovieItemDao;
 import Movie.movie.entities.MovieItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,6 @@ public class MovieItemManager implements MovieItemService {
 
     @Override
     public DataResult getAll() {
-        return null;
+        return new SuccessDataResult(this.movieItemDao.findAll(),"all movie items get");
     }
 }

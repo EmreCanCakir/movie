@@ -3,6 +3,7 @@ package Movie.movie.business.concretes;
 import Movie.movie.business.abstracts.MovieService;
 import Movie.movie.core.utilities.results.DataResult;
 import Movie.movie.core.utilities.results.Result;
+import Movie.movie.core.utilities.results.SuccessDataResult;
 import Movie.movie.dataaccess.MovieDao;
 import Movie.movie.entities.Movie;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,6 @@ public class MovieManager implements MovieService {
 
     @Override
     public DataResult getAll() {
-        return null;
+        return new SuccessDataResult(this.movieDao.findAll(),"all movies get");
     }
 }

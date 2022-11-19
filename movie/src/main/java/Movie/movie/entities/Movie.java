@@ -1,6 +1,7 @@
 package Movie.movie.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -51,6 +52,7 @@ public class Movie {
     private String released;
 
     @OneToOne(mappedBy = "movie")
+    @JsonIgnore
     private MovieItem movieItemId;
 
     @Column(name = "created_at",nullable = false,updatable = false)

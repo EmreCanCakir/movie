@@ -4,6 +4,7 @@ import Movie.movie.business.abstracts.MovieService;
 import Movie.movie.business.abstracts.UserService;
 import Movie.movie.core.utilities.results.DataResult;
 import Movie.movie.core.utilities.results.Result;
+import Movie.movie.core.utilities.results.SuccessDataResult;
 import Movie.movie.dataaccess.UserDao;
 import Movie.movie.entities.Movie;
 import Movie.movie.entities.User;
@@ -41,6 +42,6 @@ public class UserManager implements UserService {
 
     @Override
     public DataResult getAll() {
-        return null;
+        return new SuccessDataResult(this.userDao.findAll(),"all users get");
     }
 }

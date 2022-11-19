@@ -3,6 +3,7 @@ package Movie.movie.business.concretes;
 import Movie.movie.business.abstracts.GenreService;
 import Movie.movie.core.utilities.results.DataResult;
 import Movie.movie.core.utilities.results.Result;
+import Movie.movie.core.utilities.results.SuccessDataResult;
 import Movie.movie.dataaccess.GenreDao;
 import Movie.movie.entities.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,6 @@ public class GenreManager implements GenreService {
 
     @Override
     public DataResult getAll() {
-        return null;
+        return new SuccessDataResult(this.genreDao.findAll(),"all genres get");
     }
 }
