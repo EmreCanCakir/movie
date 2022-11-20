@@ -96,6 +96,36 @@ public class CONSTANTS {
     public static final String MOVIE_NOT_FOUND = "Movie is not found";
     public static final String MOVIE_GET_ALL_SUCCESSFULLY = "ALl Movies successfully gotten";
 
+    public static final String PHOTO_ADD_SUCCESSFULLY = "Photo is successfully added";
+    public static final String PHOTO_NOT_ADD = "Photo is not added successfully because data cannot be null";
+    public static final String PHOTO_DELETE_SUCCESSFULLY = "Photo is successfully deleted";
+    public static final String PHOTO_NOT_DELETE = "Photo is not deleted successfully because movie is not exist";
+    public static final String PHOTO_UPDATE_SUCCESSFULLY = "Photo is successfully updated";
+    public static final String PHOTO_NOT_UPDATE = "Photo is not updated successfully because data cannot be null";
+    public static final String PHOTO_GET_SUCCESSFULLY = "Photo is successfully gotten";
+    public static final String PHOTO_NOT_FOUND = "Photo is not found";
+    public static final String PHOTO_GET_ALL_SUCCESSFULLY = "ALl Photos successfully gotten";
+
+    public static final String USER_ADD_SUCCESSFULLY = "User is successfully added";
+    public static final String USER_NOT_ADD = "User is not added successfully because email | password cannot be null";
+    public static final String USER_DELETE_SUCCESSFULLY = "User is successfully deleted";
+    public static final String USER_NOT_DELETE = "User is not deleted successfully because user is not exist";
+    public static final String USER_UPDATE_SUCCESSFULLY = "User is successfully updated";
+    public static final String USER_NOT_UPDATE = "User is not updated successfully because email | password | username cannot be null";
+    public static final String USER_GET_SUCCESSFULLY = "User is successfully gotten";
+    public static final String USER_NOT_FOUND = "User is not found";
+    public static final String USER_GET_ALL_SUCCESSFULLY = "ALl Users successfully gotten";
+
+    public static final String USER_MOVIE_ITEM_COMMENT_ADD_SUCCESSFULLY = "User movie item comment is successfully added";
+    public static final String USER_MOVIE_ITEM_COMMENT_NOT_ADD = "User movie item comment is not added successfully because comment name cannot be null";
+    public static final String USER_MOVIE_ITEM_COMMENT_DELETE_SUCCESSFULLY = "User movie item comment is successfully deleted";
+    public static final String USER_MOVIE_ITEM_COMMENT_NOT_DELETE = "User movie item comment is not deleted successfully because user movie item comment is not exist";
+    public static final String USER_MOVIE_ITEM_COMMENT_UPDATE_SUCCESSFULLY = "User movie item comment is successfully updated";
+    public static final String USER_MOVIE_ITEM_COMMENT_NOT_UPDATE = "User movie item comment is not updated successfully because comment name cannot be null";
+    public static final String USER_MOVIE_ITEM_COMMENT_GET_SUCCESSFULLY = "User movie item comment is successfully gotten";
+    public static final String USER_MOVIE_ITEM_COMMENT_NOT_FOUND = "User movie item comment is not found";
+    public static final String USER_MOVIE_ITEM_COMMENT_GET_ALL_SUCCESSFULLY = "ALl User movie item comments successfully gotten";
+
     public ResponseEntity<?> getResponseEntity(Result result){
         if(result.isSuccess()){
             return ResponseEntity.ok(result);

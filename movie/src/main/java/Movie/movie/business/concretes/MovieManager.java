@@ -47,7 +47,7 @@ public class MovieManager implements MovieService {
     @Override
     public DataResult getById(int id) {
         Movie movie = movieDao.findById(id).orElse(null);;
-        return movie.getTitle() == null ?
+        return movie == null ?
                 new ErrorDataResult(CONSTANTS.MOVIE_NOT_FOUND) :
                 new SuccessDataResult(movie, CONSTANTS.MOVIE_GET_SUCCESSFULLY);
     }
