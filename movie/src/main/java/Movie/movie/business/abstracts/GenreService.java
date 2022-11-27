@@ -1,8 +1,7 @@
 package Movie.movie.business.abstracts;
 
 import Movie.movie.core.business.BaseService;
-import Movie.movie.core.utilities.results.DataResult;
-import Movie.movie.entities.Genre;
+import Movie.movie.entities.dtos.GenreDto;
 
-public interface GenreService extends BaseService<Genre> {
+public interface GenreService extends BaseService<GenreDto> {
 }

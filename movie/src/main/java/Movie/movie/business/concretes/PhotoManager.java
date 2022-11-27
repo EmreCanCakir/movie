@@ -4,18 +4,21 @@ import Movie.movie.business.abstracts.PhotoService;
 import Movie.movie.core.utilities.constants.CONSTANTS;
 import Movie.movie.core.utilities.results.*;
 import Movie.movie.dataaccess.PhotoDao;
-import Movie.movie.entities.Movie;
 import Movie.movie.entities.Photo;
+import Movie.movie.entities.dtos.PhotoDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PhotoManager implements PhotoService {
     private PhotoDao photoDao;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public PhotoManager(PhotoDao photoDao) {
+    public PhotoManager(PhotoDao photoDao, ModelMapper modelMapper) {
         this.photoDao = photoDao;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -37,11 +40,12 @@ public class PhotoManager implements PhotoService {
     }
 
     @Override
-    public Result add(Photo entity) {
+    public Result add(PhotoDto entity) {
         if (entity.getData().length < 10) {
             return new ErrorResult(CONSTANTS.PHOTO_NOT_ADD);
         }
-        photoDao.save(entity);
+        Photo photo = modelMapper.map(entity, Photo.class);
+        photoDao.save(photo);
         return new SuccessResult(CONSTANTS.PHOTO_ADD_SUCCESSFULLY);
     }
 
@@ -51,11 +55,12 @@ public class PhotoManager implements PhotoService {
     }
 
     @Override
-    public Result update(Photo entity) {
+    public Result update(PhotoDto entity) {
         if (entity.getData() == null || entity.getName().isEmpty()) {
             return new ErrorResult(CONSTANTS.PHOTO_NOT_UPDATE);
         }
-        photoDao.save(entity);
+        Photo photo = modelMapper.map(entity, Photo.class);
+        photoDao.save(photo);
         return new SuccessResult(CONSTANTS.PHOTO_UPDATE_SUCCESSFULLY);
     }
 

@@ -5,23 +5,27 @@ import Movie.movie.core.utilities.constants.CONSTANTS;
 import Movie.movie.core.utilities.results.*;
 import Movie.movie.dataaccess.MovieDao;
 import Movie.movie.entities.Movie;
-import Movie.movie.entities.MovieItem;
+import Movie.movie.entities.dtos.MovieDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MovieManager implements MovieService {
     private MovieDao movieDao;
+    private final ModelMapper modelMapper;
 
-    public MovieManager(MovieDao movieDao) {
+    public MovieManager(MovieDao movieDao, ModelMapper modelMapper) {
         this.movieDao = movieDao;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public Result add(Movie entity) {
+    public Result add(MovieDto entity) {
         if (entity.getTitle() == null) {
             return new ErrorResult(CONSTANTS.MOVIE_NOT_ADD);
         }
-        movieDao.save(entity);
+        Movie movie = modelMapper.map(entity, Movie.class);
+        movieDao.save(movie);
         return new SuccessResult(CONSTANTS.MOVIE_ADD_SUCCESSFULLY);
     }
 
@@ -36,17 +40,18 @@ public class MovieManager implements MovieService {
     }
 
     @Override
-    public Result update(Movie entity) {
+    public Result update(MovieDto entity) {
         if (entity.getTitle() == null) {
             return new ErrorResult(CONSTANTS.MOVIE_NOT_UPDATE);
         }
-        movieDao.save(entity);
+        Movie movie = modelMapper.map(entity, Movie.class);
+        movieDao.save(movie);
         return new SuccessResult(CONSTANTS.MOVIE_UPDATE_SUCCESSFULLY);
     }
 
     @Override
     public DataResult getById(int id) {
-        Movie movie = movieDao.findById(id).orElse(null);;
+        Movie movie = movieDao.findById(id).orElse(null);
         return movie == null ?
                 new ErrorDataResult(CONSTANTS.MOVIE_NOT_FOUND) :
                 new SuccessDataResult(movie, CONSTANTS.MOVIE_GET_SUCCESSFULLY);

@@ -5,24 +5,29 @@ import Movie.movie.core.utilities.constants.CONSTANTS;
 import Movie.movie.core.utilities.results.*;
 import Movie.movie.dataaccess.GenreDao;
 import Movie.movie.entities.Genre;
+import Movie.movie.entities.dtos.GenreDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GenreManager implements GenreService {
     private GenreDao genreDao;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public GenreManager(GenreDao genreDao) {
+    public GenreManager(GenreDao genreDao, ModelMapper modelMapper) {
         this.genreDao = genreDao;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public Result add(Genre entity) {
+    public Result add(GenreDto entity) {
         if (entity.getGenreName().isEmpty()) {
             return new ErrorResult(CONSTANTS.GENRE_NOT_ADD);
         }
-        genreDao.save(entity);
+        Genre genre = modelMapper.map(entity, Genre.class);
+        genreDao.save(genre);
         return new SuccessResult(CONSTANTS.GENRE_ADD_SUCCESSFULLY);
     }
 
@@ -37,17 +42,18 @@ public class GenreManager implements GenreService {
     }
 
     @Override
-    public Result update(Genre entity) {
+    public Result update(GenreDto entity) {
         if (entity.getGenreName().isEmpty()) {
             return new ErrorResult(CONSTANTS.GENRE_NOT_UPDATE);
         }
-        genreDao.save(entity);
+        Genre genre = modelMapper.map(entity, Genre.class);
+        genreDao.save(genre);
         return new SuccessResult(CONSTANTS.GENRE_UPDATE_SUCCESSFULLY);
     }
 
     @Override
     public DataResult getById(int id) {
-        Genre genre = genreDao.findById(id).get();
+        Genre genre = genreDao.findById(id).orElse(null);
         return genre.getGenreName().isEmpty() ?
                 new ErrorDataResult(CONSTANTS.GENRE_NOT_FOUND) :
                 new SuccessDataResult(genre, CONSTANTS.GENRE_GET_SUCCESSFULLY);

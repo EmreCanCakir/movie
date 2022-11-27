@@ -4,26 +4,30 @@ import Movie.movie.business.abstracts.MovieDirectionService;
 import Movie.movie.core.utilities.constants.CONSTANTS;
 import Movie.movie.core.utilities.results.*;
 import Movie.movie.dataaccess.MovieDirectionDao;
-import Movie.movie.entities.MovieCast;
 import Movie.movie.entities.MovieDirection;
+import Movie.movie.entities.dtos.MovieDirectionDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MovieDirectionManager implements MovieDirectionService {
     private MovieDirectionDao movieDirectionDao;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public MovieDirectionManager(MovieDirectionDao movieDirectionDao) {
+    public MovieDirectionManager(MovieDirectionDao movieDirectionDao, ModelMapper modelMapper) {
         this.movieDirectionDao = movieDirectionDao;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public Result add(MovieDirection entity) {
-        if (entity.getMovieId().getId() == 0 || entity.getDirectorId().getId() == 0) {
+    public Result add(MovieDirectionDto entity) {
+        if (entity.getMovieId() == 0 || entity.getDirectorId() == 0) {
             return new ErrorResult(CONSTANTS.MOVIE_DIRECTION_NOT_ADD);
         }
-        movieDirectionDao.save(entity);
+        MovieDirection movieDirection = modelMapper.map(entity, MovieDirection.class);
+        movieDirectionDao.save(movieDirection);
         return new SuccessResult(CONSTANTS.MOVIE_DIRECTION_ADD_SUCCESSFULLY);
     }
 
@@ -38,11 +42,12 @@ public class MovieDirectionManager implements MovieDirectionService {
     }
 
     @Override
-    public Result update(MovieDirection entity) {
-        if (entity.getMovieId().getId() == 0 || entity.getDirectorId().getId() == 0) {
+    public Result update(MovieDirectionDto entity) {
+        if (entity.getMovieId() == 0 || entity.getDirectorId() == 0) {
             return new ErrorResult(CONSTANTS.MOVIE_DIRECTION_NOT_UPDATE);
         }
-        movieDirectionDao.save(entity);
+        MovieDirection movieDirection = modelMapper.map(entity, MovieDirection.class);
+        movieDirectionDao.save(movieDirection);
         return new SuccessResult(CONSTANTS.MOVIE_DIRECTION_UPDATE_SUCCESSFULLY);
     }
 

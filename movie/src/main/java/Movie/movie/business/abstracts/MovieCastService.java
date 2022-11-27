@@ -1,8 +1,7 @@
 package Movie.movie.business.abstracts;
 
 import Movie.movie.core.business.BaseService;
-import Movie.movie.core.utilities.results.DataResult;
-import Movie.movie.entities.MovieCast;
+import Movie.movie.entities.dtos.MovieCastDto;
 
-public interface MovieCastService extends BaseService<MovieCast> {
+public interface MovieCastService extends BaseService<MovieCastDto> {
 }

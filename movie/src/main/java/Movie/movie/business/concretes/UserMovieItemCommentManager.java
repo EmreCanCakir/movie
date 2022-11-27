@@ -4,26 +4,29 @@ import Movie.movie.business.abstracts.UserMovieItemCommentService;
 import Movie.movie.core.utilities.constants.CONSTANTS;
 import Movie.movie.core.utilities.results.*;
 import Movie.movie.dataaccess.UserMovieItemCommentDao;
-import Movie.movie.entities.Movie;
 import Movie.movie.entities.UserMovieItemComment;
+import Movie.movie.entities.dtos.UserMovieItemCommentDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserMovieItemCommentManager implements UserMovieItemCommentService {
     private UserMovieItemCommentDao userMovieItemCommentDao;
-
+    private final ModelMapper modelMapper;
     @Autowired
-    public UserMovieItemCommentManager(UserMovieItemCommentDao userMovieItemCommentDao) {
+    public UserMovieItemCommentManager(UserMovieItemCommentDao userMovieItemCommentDao, ModelMapper modelMapper) {
         this.userMovieItemCommentDao = userMovieItemCommentDao;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public Result add(UserMovieItemComment entity) {
+    public Result add(UserMovieItemCommentDto entity) {
         if (entity.getCommentName().isEmpty()) {
             return new ErrorResult(CONSTANTS.USER_MOVIE_ITEM_COMMENT_NOT_ADD);
         }
-        userMovieItemCommentDao.save(entity);
+        UserMovieItemComment userMovieItemComment = modelMapper.map(entity, UserMovieItemComment.class);
+        userMovieItemCommentDao.save(userMovieItemComment);
         return new SuccessResult(CONSTANTS.USER_MOVIE_ITEM_COMMENT_ADD_SUCCESSFULLY);
     }
 
@@ -38,11 +41,12 @@ public class UserMovieItemCommentManager implements UserMovieItemCommentService 
     }
 
     @Override
-    public Result update(UserMovieItemComment entity) {
+    public Result update(UserMovieItemCommentDto entity) {
         if (entity.getCommentName().isEmpty()) {
             return new ErrorResult(CONSTANTS.USER_MOVIE_ITEM_COMMENT_NOT_UPDATE);
         }
-        userMovieItemCommentDao.save(entity);
+        UserMovieItemComment userMovieItemComment = modelMapper.map(entity, UserMovieItemComment.class);
+        userMovieItemCommentDao.save(userMovieItemComment);
         return new SuccessResult(CONSTANTS.USER_MOVIE_ITEM_COMMENT_UPDATE_SUCCESSFULLY);
     }
 
