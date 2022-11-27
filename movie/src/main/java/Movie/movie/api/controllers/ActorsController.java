@@ -1,12 +1,13 @@
 package Movie.movie.api.controllers;
 
 import Movie.movie.business.abstracts.ActorService;
+import Movie.movie.core.utilities.constants.CONSTANTS;
 import Movie.movie.core.utilities.results.DataResult;
 import Movie.movie.entities.Actor;
+import Movie.movie.entities.dtos.ActorDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +21,28 @@ public class ActorsController {
         this.actorService = actorService;
     }
 
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody ActorDto actor){
+        return CONSTANTS.getResponseEntity(this.actorService.add(actor));
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(@RequestParam("id") int id){
+        return CONSTANTS.getResponseEntity(this.actorService.delete(id));
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody ActorDto actor) {
+        return CONSTANTS.getResponseEntity(this.actorService.update(actor));
+    }
+
+    @GetMapping("/getById")
+    public ResponseEntity<?> getById(@RequestParam("id") int id) {
+        return CONSTANTS.getResponseEntity(this.actorService.getById(id));
+    }
+
     @GetMapping("/getAll")
-    public DataResult<List<Actor>> getAll() {
-        return this.actorService.getAll();
+    public ResponseEntity<?> getAll() {
+        return CONSTANTS.getResponseEntity(this.actorService.getAll());
     }
 }

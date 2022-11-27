@@ -1,14 +1,11 @@
 package Movie.movie.api.controllers;
 
 import Movie.movie.business.abstracts.MovieDirectionService;
-import Movie.movie.core.utilities.results.DataResult;
-import Movie.movie.entities.MovieDirection;
+import Movie.movie.core.utilities.constants.CONSTANTS;
+import Movie.movie.entities.dtos.MovieDirectionDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/movie_direction_controller")
@@ -20,8 +17,29 @@ public class MovieDirectionsController {
         this.movieDirectionService = movieDirectionService;
     }
 
-    @GetMapping("/getAll")
-    public DataResult<List<MovieDirection>> getAll() {
-        return this.movieDirectionService.getAll();
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody MovieDirectionDto movieDirectionDto){
+        return CONSTANTS.getResponseEntity(this.movieDirectionService.add(movieDirectionDto));
     }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(@RequestParam("id") int id){
+        return CONSTANTS.getResponseEntity(this.movieDirectionService.delete(id));
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody MovieDirectionDto movieDirectionDto) {
+        return CONSTANTS.getResponseEntity(this.movieDirectionService.update(movieDirectionDto));
+    }
+
+    @GetMapping("/getById")
+    public ResponseEntity<?> getById(@RequestParam("id") int id) {
+        return CONSTANTS.getResponseEntity(this.movieDirectionService.getById(id));
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<?> getAll() {
+        return CONSTANTS.getResponseEntity(this.movieDirectionService.getAll());
+    }
+
 }
