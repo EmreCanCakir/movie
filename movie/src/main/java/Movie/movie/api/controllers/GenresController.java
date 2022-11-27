@@ -1,14 +1,12 @@
 package Movie.movie.api.controllers;
 
 import Movie.movie.business.abstracts.GenreService;
-import Movie.movie.core.utilities.results.DataResult;
-import Movie.movie.entities.Genre;
+import Movie.movie.core.utilities.constants.CONSTANTS;
+import Movie.movie.entities.dtos.GenreDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/genre_controller")
@@ -20,8 +18,28 @@ public class GenresController {
         this.genreService = genreService;
     }
 
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody GenreDto genre){
+        return CONSTANTS.getResponseEntity(this.genreService.add(genre));
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(@RequestParam("id") int id){
+        return CONSTANTS.getResponseEntity(this.genreService.delete(id));
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody GenreDto genre) {
+        return CONSTANTS.getResponseEntity(this.genreService.update(genre));
+    }
+
+    @GetMapping("/getById")
+    public ResponseEntity<?> getById(@RequestParam("id") int id) {
+        return CONSTANTS.getResponseEntity(this.genreService.getById(id));
+    }
+
     @GetMapping("/getAll")
-    public DataResult<List<Genre>> getAll() {
-        return this.genreService.getAll();
+    public ResponseEntity<?> getAll() {
+        return CONSTANTS.getResponseEntity(this.genreService.getAll());
     }
 }

@@ -5,24 +5,29 @@ import Movie.movie.core.utilities.constants.CONSTANTS;
 import Movie.movie.core.utilities.results.*;
 import Movie.movie.dataaccess.MovieCastDao;
 import Movie.movie.entities.MovieCast;
+import Movie.movie.entities.dtos.MovieCastDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MovieCastManager implements MovieCastService {
     private MovieCastDao movieCastDao;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public MovieCastManager(MovieCastDao movieCastDao) {
+    public MovieCastManager(MovieCastDao movieCastDao, ModelMapper modelMapper) {
         this.movieCastDao = movieCastDao;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public Result add(MovieCast entity) {
-        if (entity.getMovieId().getId() == 0 || entity.getActorId().getId() == 0) {
+    public Result add(MovieCastDto entity) {
+        if (entity.getMovieId() == 0 || entity.getActorId() == 0) {
             return new ErrorResult(CONSTANTS.MOVIE_CAST_NOT_ADD);
         }
-        movieCastDao.save(entity);
+        MovieCast movieCast = modelMapper.map(entity, MovieCast.class);
+        movieCastDao.save(movieCast);
         return new SuccessResult(CONSTANTS.MOVIE_CAST_ADD_SUCCESSFULLY);
     }
 
@@ -37,11 +42,12 @@ public class MovieCastManager implements MovieCastService {
     }
 
     @Override
-    public Result update(MovieCast entity) {
-        if (entity.getMovieId().getId() == 0 || entity.getActorId().getId() == 0) {
+    public Result update(MovieCastDto entity) {
+        if (entity.getMovieId() == 0 || entity.getActorId() == 0) {
             return new ErrorResult(CONSTANTS.MOVIE_CAST_NOT_UPDATE);
         }
-        movieCastDao.save(entity);
+        MovieCast movieCast = modelMapper.map(entity, MovieCast.class);
+        movieCastDao.save(movieCast);
         return new SuccessResult(CONSTANTS.MOVIE_CAST_UPDATE_SUCCESSFULLY);
     }
 

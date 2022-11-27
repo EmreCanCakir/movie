@@ -1,8 +1,7 @@
 package Movie.movie.business.abstracts;
 
 import Movie.movie.core.business.BaseService;
-import Movie.movie.core.utilities.results.DataResult;
-import Movie.movie.entities.MovieDirection;
+import Movie.movie.entities.dtos.MovieDirectionDto;
 
-public interface MovieDirectionService extends BaseService<MovieDirection> {
+public interface MovieDirectionService extends BaseService<MovieDirectionDto> {
 }

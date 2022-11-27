@@ -1,12 +1,11 @@
 package Movie.movie.api.controllers;
 
 import Movie.movie.business.abstracts.PhotoService;
-import Movie.movie.core.utilities.results.DataResult;
-import Movie.movie.entities.Photo;
+import Movie.movie.core.utilities.constants.CONSTANTS;
+import Movie.movie.entities.dtos.PhotoDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +19,28 @@ public class PhotosController {
         this.photoService = photoService;
     }
 
-    @GetMapping ("/getAll")
-    public DataResult<List<Photo>> getAll() {
-        return this.photoService.getAll();
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody PhotoDto photoDto){
+        return CONSTANTS.getResponseEntity(this.photoService.add(photoDto));
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(@RequestParam("id") String id){
+        return CONSTANTS.getResponseEntity(this.photoService.delete(id));
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody PhotoDto photoDto) {
+        return CONSTANTS.getResponseEntity(this.photoService.update(photoDto));
+    }
+
+    @GetMapping("/getById")
+    public ResponseEntity<?> getById(@RequestParam("id") String id) {
+        return CONSTANTS.getResponseEntity(this.photoService.getById(id));
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<?> getAll() {
+        return CONSTANTS.getResponseEntity(this.photoService.getAll());
     }
 }

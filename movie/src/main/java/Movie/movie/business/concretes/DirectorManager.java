@@ -5,24 +5,28 @@ import Movie.movie.core.utilities.constants.CONSTANTS;
 import Movie.movie.core.utilities.results.*;
 import Movie.movie.dataaccess.DirectorDao;
 import Movie.movie.entities.Director;
+import Movie.movie.entities.dtos.DirectorDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DirectorManager implements DirectorService {
     private DirectorDao directorDao;
-
+    private final ModelMapper modelMapper;
     @Autowired
-    public DirectorManager(DirectorDao directorDao) {
+    public DirectorManager(DirectorDao directorDao, ModelMapper modelMapper) {
         this.directorDao = directorDao;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public Result add(Director entity) {
+    public Result add(DirectorDto entity) {
         if (entity.getFirstName().length() < 3) {
             return new ErrorResult(CONSTANTS.DIRECTOR_NOT_ADD);
         }
-        directorDao.save(entity);
+        Director director = modelMapper.map(entity, Director.class);
+        directorDao.save(director);
         return new SuccessResult(CONSTANTS.DIRECTOR_ADD_SUCCESSFULLY);
     }
 
@@ -37,18 +41,19 @@ public class DirectorManager implements DirectorService {
     }
 
     @Override
-    public Result update(Director entity) {
+    public Result update(DirectorDto entity) {
         if (entity.getFirstName().length() < 3) {
             return new ErrorResult(CONSTANTS.DIRECTOR_NOT_UPDATE);
         }
-        directorDao.save(entity);
+        Director director = modelMapper.map(entity, Director.class);
+        directorDao.save(director);
         return new SuccessResult(CONSTANTS.DIRECTOR_UPDATE_SUCCESSFULLY);
     }
 
     @Override
     public DataResult getById(int id) {
-        Director director = directorDao.findById(id).get();
-        return director.getFirstName().length() > 0 ?
+        Director director = directorDao.findById(id).orElse(null);
+        return director.getFirstName().isEmpty() ?
                 new ErrorDataResult(CONSTANTS.DIRECTOR_NOT_FOUND) :
                 new SuccessDataResult(director, CONSTANTS.DIRECTOR_GET_SUCCESSFULLY);
     }

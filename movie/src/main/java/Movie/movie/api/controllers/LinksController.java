@@ -1,12 +1,14 @@
 package Movie.movie.api.controllers;
 
 import Movie.movie.business.abstracts.LinkService;
+import Movie.movie.core.utilities.constants.CONSTANTS;
 import Movie.movie.core.utilities.results.DataResult;
+import Movie.movie.core.utilities.results.SuccessDataResult;
 import Movie.movie.entities.Link;
+import Movie.movie.entities.dtos.LinkDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +22,29 @@ public class LinksController {
         this.linkService = linkService;
     }
 
-    @GetMapping("/getAll")
-    public DataResult<List<Link>> getAll() {
-        return this.linkService.getAll();
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody LinkDto link){
+        return CONSTANTS.getResponseEntity(this.linkService.add(link));
     }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(@RequestParam("id") int id){
+        return CONSTANTS.getResponseEntity(this.linkService.delete(id));
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody LinkDto link) {
+        return CONSTANTS.getResponseEntity(this.linkService.update(link));
+    }
+
+    @GetMapping("/getById")
+    public ResponseEntity<?> getById(@RequestParam("id") int id) {
+        return CONSTANTS.getResponseEntity(this.linkService.getById(id));
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<?> getAll() {
+        return CONSTANTS.getResponseEntity(this.linkService.getAll());
+    }
+
 }

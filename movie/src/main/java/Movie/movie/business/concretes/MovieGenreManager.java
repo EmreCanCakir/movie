@@ -5,24 +5,29 @@ import Movie.movie.core.utilities.constants.CONSTANTS;
 import Movie.movie.core.utilities.results.*;
 import Movie.movie.dataaccess.MovieGenreDao;
 import Movie.movie.entities.MovieGenres;
+import Movie.movie.entities.dtos.MovieGenreDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MovieGenreManager implements MovieGenreService {
     private MovieGenreDao movieGenreDao;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public MovieGenreManager(MovieGenreDao movieGenreDao) {
+    public MovieGenreManager(MovieGenreDao movieGenreDao, ModelMapper modelMapper) {
         this.movieGenreDao = movieGenreDao;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public Result add(MovieGenres entity) {
-        if (entity.getMovieId().getId() == 0 || entity.getGenreId().getId() == 0) {
+    public Result add(MovieGenreDto entity) {
+        if (entity.getMovieId() == 0 || entity.getGenreId() == 0) {
             return new ErrorResult(CONSTANTS.MOVIE_GENRE_NOT_ADD);
         }
-        movieGenreDao.save(entity);
+        MovieGenres movieGenres = modelMapper.map(entity, MovieGenres.class);
+        movieGenreDao.save(movieGenres);
         return new SuccessResult(CONSTANTS.MOVIE_GENRE_ADD_SUCCESSFULLY);
     }
 
@@ -37,11 +42,12 @@ public class MovieGenreManager implements MovieGenreService {
     }
 
     @Override
-    public Result update(MovieGenres entity) {
-        if (entity.getMovieId().getId() == 0 || entity.getGenreId().getId() == 0) {
+    public Result update(MovieGenreDto entity) {
+        if (entity.getMovieId() == 0 || entity.getGenreId() == 0) {
             return new ErrorResult(CONSTANTS.MOVIE_GENRE_NOT_UPDATE);
         }
-        movieGenreDao.save(entity);
+        MovieGenres movieGenres = modelMapper.map(entity, MovieGenres.class);
+        movieGenreDao.save(movieGenres);
         return new SuccessResult(CONSTANTS.MOVIE_GENRE_UPDATE_SUCCESSFULLY);
     }
 
