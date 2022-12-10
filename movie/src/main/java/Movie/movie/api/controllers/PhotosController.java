@@ -2,12 +2,11 @@ package Movie.movie.api.controllers;
 
 import Movie.movie.business.abstracts.PhotoService;
 import Movie.movie.core.utilities.constants.CONSTANTS;
-import Movie.movie.entities.dtos.PhotoDto;
+import Movie.movie.entities.dtos.PhotoAddDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/photo_controller")
@@ -20,18 +19,18 @@ public class PhotosController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody PhotoDto photoDto){
-        return CONSTANTS.getResponseEntity(this.photoService.add(photoDto));
+    public ResponseEntity<?> add(@ModelAttribute PhotoAddDto photoAddDto,MultipartFile file) {
+        return CONSTANTS.getResponseEntity(this.photoService.add(photoAddDto, file));
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<?> delete(@RequestParam("id") String id){
+    public ResponseEntity<?> delete(@RequestParam("id") String id) {
         return CONSTANTS.getResponseEntity(this.photoService.delete(id));
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody PhotoDto photoDto) {
-        return CONSTANTS.getResponseEntity(this.photoService.update(photoDto));
+    public ResponseEntity<?> update(@ModelAttribute PhotoAddDto photoAddDto, MultipartFile file) {
+        return CONSTANTS.getResponseEntity(this.photoService.update(photoAddDto, file));
     }
 
     @GetMapping("/getById")
