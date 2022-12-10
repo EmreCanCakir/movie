@@ -91,7 +91,7 @@ public class ModelMapperConfig {
         @Override
         protected void configure() {
             map(source.getMovieId(), destination.getMovieId().getId());
-            map(source.getUserMovieItemCommentId(), destination.getUserMovieItemCommentId());
+            map(source.getId(), destination.getId());
             map(source.getName(), destination.getName());
             map(source.getData(), destination.getData());
             map(source.getType(), destination.getType());

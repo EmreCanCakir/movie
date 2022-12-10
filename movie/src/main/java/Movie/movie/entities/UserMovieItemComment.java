@@ -48,6 +48,6 @@ public class UserMovieItemComment {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastModifiedAt;
 
-    @OneToMany(mappedBy = "userMovieItemCommentId")
-    private List<Photo> photos;
+   /* @OneToMany(mappedBy = "userMovieItemCommentId")
+    private List<Photo> photos;*/
 }

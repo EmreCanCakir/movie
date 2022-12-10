@@ -1,15 +1,17 @@
 package Movie.movie.entities.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
+@AllArgsConstructor
 public class PhotoDto implements Serializable {
-    private int id;
-    private final String name;
-    private final String type;
-    private final byte[] data;
-    private final int movieId;
-    private final int userMovieItemCommentId;
+    private String id;
+    private String name;
+    private String type;
+    private byte[] data;
+    private int movieId;
+  //  private int userMovieItemCommentId;
 }
