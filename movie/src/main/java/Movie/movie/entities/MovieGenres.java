@@ -21,14 +21,11 @@ public class MovieGenres {
     private int id;
 
     @ManyToOne
-    @MapsId("id")
     @JoinColumn(name = "movie_id")
     @JsonIgnore
     private Movie movieId;
 
     @ManyToOne
-    @MapsId("id")
     @JoinColumn(name = "genre_id")
-    @JsonManagedReference
     private Genre genreId;
 }

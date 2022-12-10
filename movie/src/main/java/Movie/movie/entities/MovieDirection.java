@@ -1,5 +1,6 @@
 package Movie.movie.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Table(name = "movie_direction")
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class MovieDirection {
 
     @Id
@@ -20,14 +22,11 @@ public class MovieDirection {
     private int id;
 
     @ManyToOne
-    @MapsId("id")
     @JoinColumn(name = "movie_id")
     @JsonIgnore
     private Movie movieId;
 
     @ManyToOne
-    @MapsId("id")
     @JoinColumn(name = "director_id")
-    @JsonManagedReference
     private Director directorId;
 }

@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Table(name = "links")
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Link {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +28,6 @@ public class Link {
     private String linkAddress;
 
     @ManyToOne
-    @MapsId("id")
     @JoinColumn(name = "movie_item_id")
     @JsonIgnore
     private MovieItem movieItemId;

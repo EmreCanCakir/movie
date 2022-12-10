@@ -10,7 +10,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class MovieCastManager implements MovieCastService {
     private MovieCastDao movieCastDao;
     private final ModelMapper modelMapper;

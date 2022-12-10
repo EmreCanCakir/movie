@@ -1,7 +1,8 @@
 package Movie.movie.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.List;
 @Table(name = "movies")
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @EntityListeners(AuditingEntityListener.class)       //This provides to keep lastModifiedDate and creationTimeStamp values in [];
 public class Movie {
 
@@ -57,25 +59,23 @@ public class Movie {
 
     @Column(name = "created_at",nullable = false,updatable = false)
     @CreationTimestamp
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
     @Column(name = "last_modified_at")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastModifiedAt;
 
     @OneToMany(mappedBy = "movieId")
-    @JsonBackReference
     private List<MovieGenres> movieGenres;
 
     @OneToMany(mappedBy = "movieId")
-    @JsonBackReference
     private List<MovieDirection> movieDirections;
 
     @OneToMany(mappedBy = "movieId")
-    @JsonBackReference
     private List<MovieCast> movieCasts;
 
     @OneToMany(mappedBy = "movieId")
-    @JsonBackReference
     private List<Photo> photos;
 }
