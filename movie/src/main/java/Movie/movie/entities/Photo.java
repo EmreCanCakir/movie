@@ -36,8 +36,8 @@ public class Photo {
     @JsonIgnore
     private Movie movieId;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "user_movie_item_command_id")
     @JsonIgnore
-    private UserMovieItemComment userMovieItemCommentId;
+    private UserMovieItemComment userMovieItemCommentId;*/
 }
