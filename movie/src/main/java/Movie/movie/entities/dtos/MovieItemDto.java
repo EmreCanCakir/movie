@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class MovieItemDto implements Serializable {
+    private int id;
     private String description;
     private int movieId;
     private LocalDateTime createdAt;

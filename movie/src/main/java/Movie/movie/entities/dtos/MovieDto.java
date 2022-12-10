@@ -6,6 +6,7 @@ import java.util.Date;
 
 @Data
 public class MovieDto {
+    private int id;
 
     private String title;
 

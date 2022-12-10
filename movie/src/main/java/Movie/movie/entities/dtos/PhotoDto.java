@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 @Data
 public class PhotoDto implements Serializable {
+    private int id;
     private final String name;
     private final String type;
     private final byte[] data;
