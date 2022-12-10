@@ -1,8 +1,6 @@
 package Movie.movie.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class UserMovieItemComment {
 
     @Id
@@ -31,26 +30,24 @@ public class UserMovieItemComment {
     private String commentName;
 
     @ManyToOne
-    @MapsId("id")
     @JoinColumn(name = "user_id")
-    @JsonManagedReference
     private User userId;
 
     @ManyToOne
-    @MapsId("id")
     @JoinColumn(name = "movie_item_id")
     @JsonIgnore
     private MovieItem movieItemId;
 
     @Column(name = "created_at",nullable = false,updatable = false)
     @CreationTimestamp
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
     @Column(name = "last_modified_at")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastModifiedAt;
 
     @OneToMany(mappedBy = "userMovieItemCommentId")
-    @JsonBackReference
     private List<Photo> photos;
 }

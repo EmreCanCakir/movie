@@ -32,13 +32,11 @@ public class Photo {
     private byte[] data;
 
     @ManyToOne
-    @MapsId("id")
     @JoinColumn(name = "movie_id")
     @JsonIgnore
     private Movie movieId;
 
     @ManyToOne
-    @MapsId("id")
     @JoinColumn(name = "user_movie_item_command_id")
     @JsonIgnore
     private UserMovieItemComment userMovieItemCommentId;

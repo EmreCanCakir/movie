@@ -7,9 +7,10 @@ import java.time.LocalDateTime;
 
 @Data
 public class UserMovieItemCommentDto implements Serializable {
-    private final String commentName;
-    private final int userId;
-    private final int movieItemId;
-    private final LocalDateTime createdAt;
-    private final LocalDateTime lastModifiedAt;
+    private int id;
+    private String commentName;
+    private int userId;
+    private int movieItemId;
+    private LocalDateTime createdAt;
+    private LocalDateTime lastModifiedAt;
 }
