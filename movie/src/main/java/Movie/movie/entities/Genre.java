@@ -25,7 +25,7 @@ public class Genre {
     @Column(name = "genre_name", nullable = false, unique = true)
     private String genreName;
 
-    @OneToMany(mappedBy = "genreId")
+    @OneToMany(mappedBy = "genreId", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<MovieGenres> movieGenres;
 }

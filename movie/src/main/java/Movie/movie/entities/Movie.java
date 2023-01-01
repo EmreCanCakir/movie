@@ -53,7 +53,7 @@ public class Movie {
     @Column(name = "released")
     private String released;
 
-    @OneToOne(mappedBy = "movie")
+    @OneToOne(mappedBy = "movie", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private MovieItem movieItemId;
 
@@ -67,15 +67,15 @@ public class Movie {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastModifiedAt;
 
-    @OneToMany(mappedBy = "movieId")
+    @OneToMany(mappedBy = "movieId", cascade = CascadeType.ALL)
     private List<MovieGenres> movieGenres;
 
-    @OneToMany(mappedBy = "movieId")
+    @OneToMany(mappedBy = "movieId", cascade = CascadeType.ALL)
     private List<MovieDirection> movieDirections;
 
-    @OneToMany(mappedBy = "movieId")
+    @OneToMany(mappedBy = "movieId", cascade = CascadeType.ALL)
     private List<MovieCast> movieCasts;
 
-    @OneToMany(mappedBy = "movieId")
+    @OneToMany(mappedBy = "movieId", cascade = CascadeType.ALL)
     private List<Photo> photos;
 }

@@ -6,6 +6,9 @@ import java.util.Date;
 
 @Data
 public class DirectorDto {
+
+    private int id;
+
     private String firstName;
 
     private String lastName;

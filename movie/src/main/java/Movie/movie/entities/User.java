@@ -40,7 +40,7 @@ public class User {
     @Column(name = "user_type")
     private String userType;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<UserMovieItemComment> userMovieItemComments;
 

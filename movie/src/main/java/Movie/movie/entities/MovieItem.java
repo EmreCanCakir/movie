@@ -35,10 +35,10 @@ public class MovieItem {
     @JoinColumn(name = "movie_id", referencedColumnName = "id", nullable = false)
     private Movie movie;
 
-    @OneToMany(mappedBy = "movieItemId")
+    @OneToMany(mappedBy = "movieItemId", cascade = CascadeType.ALL)
     private List<Link> links;
 
-    @OneToMany(mappedBy = "movieItemId")
+    @OneToMany(mappedBy = "movieItemId", cascade = CascadeType.ALL)
     private List<UserMovieItemComment> userMovieItemComments;
 
     @Column(name = "created_at",nullable = false,updatable = false)
