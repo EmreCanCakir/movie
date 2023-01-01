@@ -33,7 +33,7 @@ public class MovieItemManager implements MovieItemService {
 
     @Override
     public Result delete(int id) {
-        MovieItem movieItem = this.movieItemDao.findById(id).get();
+        MovieItem movieItem = this.movieItemDao.findById(id).orElse(null);
         if (movieItem.getMovie() == null) {
             return new ErrorResult(CONSTANTS.MOVIE_ITEM_NOT_DELETE);
         }
@@ -53,7 +53,7 @@ public class MovieItemManager implements MovieItemService {
 
     @Override
     public DataResult getById(int id) {
-        MovieItem movieItem = movieItemDao.findById(id).get();
+        MovieItem movieItem = movieItemDao.findById(id).orElse(null);
         return movieItem.getMovie() == null ?
                 new ErrorDataResult(CONSTANTS.MOVIE_ITEM_NOT_FOUND) :
                 new SuccessDataResult(movieItem, CONSTANTS.MOVIE_ITEM_GET_SUCCESSFULLY);
