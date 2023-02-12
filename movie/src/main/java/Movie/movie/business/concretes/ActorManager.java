@@ -6,11 +6,13 @@ import Movie.movie.core.utilities.results.*;
 import Movie.movie.dataaccess.ActorDao;
 import Movie.movie.entities.Actor;
 import Movie.movie.entities.dtos.ActorDto;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class ActorManager implements ActorService {
     private ActorDao actorDao;
     private final ModelMapper modelMapper;
@@ -24,6 +26,7 @@ public class ActorManager implements ActorService {
     @Override
     public Result add(ActorDto entity) {
         if (entity.getFirstName().length() < 3) {
+            log.error(CONSTANTS.ACTOR_NOT_ADD);
             return new ErrorResult(CONSTANTS.ACTOR_NOT_ADD);
         }
         Actor actor = modelMapper.map(entity, Actor.class);
@@ -33,8 +36,9 @@ public class ActorManager implements ActorService {
 
     @Override
     public Result delete(int id) {
-        Actor actor = this.actorDao.findById(id).get();
-        if (actor.getFirstName().isEmpty()) {
+        Actor actor = this.actorDao.findById(id).orElse(new Actor());
+        if (actor.getFirstName() == null) {
+            log.error(CONSTANTS.ACTOR_NOT_DELETE);
             return new ErrorResult(CONSTANTS.ACTOR_NOT_DELETE);
         }
         this.actorDao.delete(actor);
@@ -44,6 +48,7 @@ public class ActorManager implements ActorService {
     @Override
     public Result update(ActorDto entity) {
         if (entity.getFirstName().length() < 3) {
+            log.error(CONSTANTS.ACTOR_NOT_UPDATE);
             return new ErrorResult(CONSTANTS.ACTOR_NOT_UPDATE);
         }
         Actor actor = modelMapper.map(entity, Actor.class);
@@ -53,10 +58,12 @@ public class ActorManager implements ActorService {
 
     @Override
     public DataResult getById(int id) {
-        Actor actor = actorDao.findById(id).orElse(null);
-        return actor.getFirstName().isEmpty() ?
-                new ErrorDataResult(CONSTANTS.ACTOR_NOT_FOUND) :
-                new SuccessDataResult(actor, CONSTANTS.ACTOR_GET_SUCCESSFULLY);
+        Actor actor = actorDao.findById(id).orElse(new Actor());
+        if (actor.getFirstName() == null) {
+            log.warn(CONSTANTS.ACTOR_NOT_FOUND);
+            return new ErrorDataResult(CONSTANTS.ACTOR_NOT_FOUND);
+        }
+        return new SuccessDataResult(actor, CONSTANTS.ACTOR_GET_SUCCESSFULLY);
     }
 
     @Override
