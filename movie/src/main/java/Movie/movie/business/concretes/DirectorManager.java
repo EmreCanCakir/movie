@@ -6,11 +6,13 @@ import Movie.movie.core.utilities.results.*;
 import Movie.movie.dataaccess.DirectorDao;
 import Movie.movie.entities.Director;
 import Movie.movie.entities.dtos.DirectorDto;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class DirectorManager implements DirectorService {
     private DirectorDao directorDao;
     private final ModelMapper modelMapper;
@@ -23,6 +25,7 @@ public class DirectorManager implements DirectorService {
     @Override
     public Result add(DirectorDto entity) {
         if (entity.getFirstName().length() < 3) {
+            log.error(CONSTANTS.DIRECTOR_NOT_ADD);
             return new ErrorResult(CONSTANTS.DIRECTOR_NOT_ADD);
         }
         Director director = modelMapper.map(entity, Director.class);
@@ -32,8 +35,9 @@ public class DirectorManager implements DirectorService {
 
     @Override
     public Result delete(int id) {
-        Director director = this.directorDao.findById(id).get();
-        if (director.getFirstName().isEmpty()) {
+        Director director = this.directorDao.findById(id).orElse(new Director());
+        if (director.getFirstName() == null) {
+            log.error(CONSTANTS.DIRECTOR_NOT_DELETE);
             return new ErrorResult(CONSTANTS.DIRECTOR_NOT_DELETE);
         }
         this.directorDao.delete(director);
@@ -43,6 +47,7 @@ public class DirectorManager implements DirectorService {
     @Override
     public Result update(DirectorDto entity) {
         if (entity.getFirstName().length() < 3) {
+            log.error(CONSTANTS.DIRECTOR_NOT_UPDATE);
             return new ErrorResult(CONSTANTS.DIRECTOR_NOT_UPDATE);
         }
         Director director = modelMapper.map(entity, Director.class);
@@ -52,10 +57,12 @@ public class DirectorManager implements DirectorService {
 
     @Override
     public DataResult getById(int id) {
-        Director director = directorDao.findById(id).orElse(null);
-        return director.getFirstName().isEmpty() ?
-                new ErrorDataResult(CONSTANTS.DIRECTOR_NOT_FOUND) :
-                new SuccessDataResult(director, CONSTANTS.DIRECTOR_GET_SUCCESSFULLY);
+        Director director = directorDao.findById(id).orElse(new Director());
+        if (director.getFirstName() == null){
+            log.error(CONSTANTS.DIRECTOR_NOT_FOUND);
+            return new ErrorDataResult(CONSTANTS.DIRECTOR_NOT_FOUND);
+        }
+        return new SuccessDataResult(director, CONSTANTS.DIRECTOR_GET_SUCCESSFULLY);
     }
 
     @Override

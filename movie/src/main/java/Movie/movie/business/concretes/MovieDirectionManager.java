@@ -6,11 +6,13 @@ import Movie.movie.core.utilities.results.*;
 import Movie.movie.dataaccess.MovieDirectionDao;
 import Movie.movie.entities.MovieDirection;
 import Movie.movie.entities.dtos.MovieDirectionDto;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class MovieDirectionManager implements MovieDirectionService {
     private MovieDirectionDao movieDirectionDao;
     private final ModelMapper modelMapper;
@@ -24,6 +26,7 @@ public class MovieDirectionManager implements MovieDirectionService {
     @Override
     public Result add(MovieDirectionDto entity) {
         if (entity.getMovieId() == 0 || entity.getDirectorId() == 0) {
+            log.error(CONSTANTS.MOVIE_DIRECTION_NOT_ADD);
             return new ErrorResult(CONSTANTS.MOVIE_DIRECTION_NOT_ADD);
         }
         MovieDirection movieDirection = modelMapper.map(entity, MovieDirection.class);
@@ -33,8 +36,9 @@ public class MovieDirectionManager implements MovieDirectionService {
 
     @Override
     public Result delete(int id) {
-        MovieDirection movieDirection = this.movieDirectionDao.findById(id).get();
+        MovieDirection movieDirection = this.movieDirectionDao.findById(id).orElse(new MovieDirection());
         if (movieDirection.getMovieId().getId() == 0 || movieDirection.getDirectorId().getId() == 0) {
+            log.error(CONSTANTS.MOVIE_DIRECTION_NOT_DELETE);
             return new ErrorResult(CONSTANTS.MOVIE_DIRECTION_NOT_DELETE);
         }
         this.movieDirectionDao.delete(movieDirection);
@@ -44,6 +48,7 @@ public class MovieDirectionManager implements MovieDirectionService {
     @Override
     public Result update(MovieDirectionDto entity) {
         if (entity.getMovieId() == 0 || entity.getDirectorId() == 0) {
+            log.error(CONSTANTS.MOVIE_DIRECTION_NOT_UPDATE);
             return new ErrorResult(CONSTANTS.MOVIE_DIRECTION_NOT_UPDATE);
         }
         MovieDirection movieDirection = modelMapper.map(entity, MovieDirection.class);
@@ -53,10 +58,12 @@ public class MovieDirectionManager implements MovieDirectionService {
 
     @Override
     public DataResult getById(int id) {
-        MovieDirection movieDirection = movieDirectionDao.findById(id).get();
-        return movieDirection.getMovieId().getId() == 0 ?
-                new ErrorDataResult(CONSTANTS.MOVIE_DIRECTION_NOT_FOUND) :
-                new SuccessDataResult(movieDirection, CONSTANTS.MOVIE_DIRECTION_GET_SUCCESSFULLY);
+        MovieDirection movieDirection = movieDirectionDao.findById(id).orElse(new MovieDirection());
+        if (movieDirection.getMovieId().getId() == 0) {
+            log.warn(CONSTANTS.MOVIE_DIRECTION_NOT_FOUND);
+            return new ErrorDataResult(CONSTANTS.MOVIE_DIRECTION_NOT_FOUND);
+        }
+        return new SuccessDataResult(movieDirection, CONSTANTS.MOVIE_DIRECTION_GET_SUCCESSFULLY);
     }
 
     @Override
